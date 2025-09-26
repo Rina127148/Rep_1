@@ -6,9 +6,16 @@ int main() {
   std::cout << std::unitbuf;
   std::cerr << std::unitbuf;
 
-  std::cout << "$ ";
   std::string input;
-  std::getline(std::cin, input);
-  std::cout <<  input << std::endl;
-
+  while (true)
+  {
+    std::cout  << "$ ";
+    std::getline(std::cin, input);
+    if (std::cin.eof())
+    {
+      std::cout << std::endl;
+      break;
+    }
+    std::cout <<  input << std::endl;
+  }
 }
