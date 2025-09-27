@@ -16,6 +16,10 @@ int main() {
       std::cout << std::endl;
       break;
     }
+    if (input == "\\q")
+    {
+      break;
+    }
     std::cout <<  input << std::endl;
   }
 }
