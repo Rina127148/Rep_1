@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <filesystem>
+#include <cstdlib>
 
 std::vector<std::string> loadHistory()
 {
@@ -42,6 +42,23 @@ void saveHistory(const std::vector<std::string>& history)
   }
 }
 
+void handleEcho(const std::string&input)
+{
+  size_t echoPos = input.find("echo");
+  if (echoPos == std::string::npos)return ;
+  std::string args=input.substr(echoPos+4);
+  size_t firstChar = args.find_first_not_of(" ");
+  if (firstChar != std::string::npos)
+  {
+    args =args.substr(firstChar);
+  }
+  if (args.size() >= 2 && ((args.front()=='"'&&args.back()=='"')|| (args.front()=='\'' &&args.back()=='\'')))
+  {
+    args = args.substr(1, args.size()-2);
+  }
+  std::cout << args << std::endl;
+}
+
 int main() {
   // Flush after every std::cout / std:cerr
   std::cout << std::unitbuf;
@@ -72,7 +89,14 @@ int main() {
         history.erase(history.begin());
       }
     }
-    std::cout <<  input << std::endl;
+    if (input.find("echo")== 0)
+    {
+      handleEcho(input);
+    }
+    else
+    {
+      std::cout << input << std::endl;
+    }
   }
   saveHistory(history);
   return (0);
